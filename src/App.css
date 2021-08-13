@@ -1,0 +1,23 @@
+.App {
+    text-align: center;
+}
+
+.board-container {
+    display: grid;
+    grid-template-columns: 40px 40px 40px 40px;
+    grid-template-rows: 40px 40px 40px 40px;
+
+    background-color: bisque;
+    width: 160px;
+    margin: 0 auto;
+    padding: 1em;
+    justify-content: center;
+    gap: 0.1em;
+}
+
+.tile {
+    border: 1px solid green;
+    padding: 0.5em;
+    margin: 0.1em;
+    background: burlywood;
+}
