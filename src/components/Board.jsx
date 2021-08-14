@@ -4,13 +4,11 @@ import "../App.css";
 
 const Board = ({ gameBoard, handleTileClick }) => {
     const arrayOfTiles = gameBoard.map((index) => {
-        // return index !== gameBoard.length - 1 ? (
-        return (
+        return index !== gameBoard.length ? (
             <Tile key={index} tile={index} handleTileClick={handleTileClick} />
+        ) : (
+            <Tile key={index} tile={" "} handleTileClick={handleTileClick} />
         );
-        // ) : (
-        //     <Tile key={index} tile={" "} handleTileClick={handleTileClick} />
-        // );
     });
 
     console.log(arrayOfTiles);
