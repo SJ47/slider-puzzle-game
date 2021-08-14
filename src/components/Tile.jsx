@@ -4,7 +4,7 @@ const Tile = ({ tile, handleTileClick }) => {
     return (
         <div
             className="tile"
-            onClick={(e) => handleTileClick(e.target.textContent)}
+            onClick={(e) => handleTileClick(parseInt(e.target.textContent))}
         >
             {tile}
         </div>

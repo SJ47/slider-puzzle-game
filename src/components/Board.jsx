@@ -1,24 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Tile from "./Tile";
 import "../App.css";
 
-const Board = ({ handleTileClick }) => {
-    // const gameBoardSize = new Array(16); // 4 x 4 board for 15 tiles and 1 blank
-
-    const gameBoardSize = [
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-    ]; // 4 x 4 board for 15 tiles and 1 blank
-
-    const arrayOfTiles = gameBoardSize.map((tile, index) => {
-        return index + 1 !== gameBoardSize.length ? (
-            <Tile
-                key={index}
-                tile={index + 1}
-                handleTileClick={handleTileClick}
-            />
-        ) : (
-            <Tile key={index} tile="-" handleTileClick={handleTileClick} />
+const Board = ({ gameBoard, handleTileClick }) => {
+    const arrayOfTiles = gameBoard.map((index) => {
+        // return index !== gameBoard.length - 1 ? (
+        return (
+            <Tile key={index} tile={index} handleTileClick={handleTileClick} />
         );
+        // ) : (
+        //     <Tile key={index} tile={" "} handleTileClick={handleTileClick} />
+        // );
     });
 
     console.log(arrayOfTiles);
