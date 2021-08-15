@@ -10,10 +10,7 @@ function shuffleArray(array) {
 }
 
 const GameContainer = () => {
-    // const gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; // 4 x 4 board for 15 tiles and 1 blank
-
     // State and variables
-
     const [winningBoard, setWinningBoard] = useState([
         1,
         2,
@@ -33,20 +30,16 @@ const GameContainer = () => {
         " ",
     ]);
 
-    const [gameBoard, setGameBoard] = useState([...winningBoard]);
-
-    // const [tileSpace, setTileSpace] = useState(gameBoard.indexOf(16) + 1);
+    const [gameBoard, setGameBoard] = useState(shuffleArray([...winningBoard])); // bad
     const [tileSpace, setTileSpace] = useState(gameBoard.indexOf(" ") + 1);
     console.log("Current tile space is: ", tileSpace);
-    // const gameBoardSize = gameBoard.length;
 
     // Functions
-
     const swapArrayElements = function (arr, indexA, indexB) {
         var temp = arr[indexA];
         arr[indexA] = arr[indexB];
         arr[indexB] = temp;
-        console.log("Swapped array: ", arr);
+        console.log("Swapped array element: ", arr);
         return arr;
     };
 
@@ -88,14 +81,6 @@ const GameContainer = () => {
         } else {
             console.log("WRONG MOVE!! ");
         }
-        console.log("gameBoard", gameBoard);
-        console.log("winningBoard", winningBoard);
-        console.log(
-            "tilespace ",
-            tileSpace,
-            " : tile number clicked",
-            tileNumberClicked
-        );
 
         // Check if game won
         if (gameWon(winningBoard, gameBoard)) {

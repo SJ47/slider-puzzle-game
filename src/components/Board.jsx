@@ -11,7 +11,7 @@ const Board = ({ gameBoard, handleTileClick }) => {
         );
     });
 
-    console.log(arrayOfTiles);
+    console.log("Mamma", arrayOfTiles);
 
     return (
         <>
