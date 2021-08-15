@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
 import Tile from "./Tile";
 import "../App.css";
+import StartButton from "./StartButton";
 
-const Board = ({ gameBoard, handleTileClick }) => {
+const Board = ({
+    gameBoard,
+    handleTileClick,
+    handleStartGame,
+    handleResetGame,
+    isGameStarted,
+}) => {
     const arrayOfTiles = gameBoard.map((index) => {
         return index !== gameBoard.length ? (
             <Tile key={index} tile={index} handleTileClick={handleTileClick} />
@@ -11,11 +18,14 @@ const Board = ({ gameBoard, handleTileClick }) => {
         );
     });
 
-    console.log("Mamma", arrayOfTiles);
-
     return (
         <>
-            <h2>Game Board 4x4</h2>
+            <h3>Game Board Size: 4x4</h3>
+            <StartButton
+                handleStartGame={handleStartGame}
+                isGameStarted={isGameStarted}
+                handleResetGame={handleResetGame}
+            />
             <div className="board-container">{arrayOfTiles}</div>
         </>
     );

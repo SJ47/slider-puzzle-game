@@ -1,18 +1,29 @@
 .App {
+    display: flex;
+    height: 100vh;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    width: 50%;
+    /* margin: 1em; */
+    /* padding: 1em; */
+    border: 5px solid green;
 }
 
 .board-container {
     display: grid;
     grid-template-columns: 40px 40px 40px 40px;
     grid-template-rows: 40px 40px 40px 40px;
-
     background-color: bisque;
     width: 160px;
     margin: 0 auto;
     padding: 1em;
     justify-content: center;
     gap: 0.1em;
+    margin-bottom: 1em;
 }
 
 .tile {
@@ -20,4 +31,12 @@
     padding: 0.5em;
     margin: 0.1em;
     background: burlywood;
+}
+
+.button {
+    display: inline-block;
+    background: orange;
+    padding: 0.5em;
+    margin: 0.5em;
+    align-items: start;
 }
