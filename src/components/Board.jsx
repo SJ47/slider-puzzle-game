@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Tile from "./Tile";
 import "../App.css";
 import StartButton from "./StartButton";
@@ -9,6 +9,7 @@ const Board = ({
     handleStartGame,
     handleResetGame,
     isGameStarted,
+    isGameWon,
 }) => {
     const arrayOfTiles = gameBoard.map((index) => {
         return index !== gameBoard.length ? (
@@ -25,6 +26,7 @@ const Board = ({
                 handleStartGame={handleStartGame}
                 isGameStarted={isGameStarted}
                 handleResetGame={handleResetGame}
+                isGameWon={isGameWon}
             />
             <div className="board-container">{arrayOfTiles}</div>
         </>

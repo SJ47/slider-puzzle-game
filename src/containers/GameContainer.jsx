@@ -29,6 +29,7 @@ const GameContainer = () => {
 
     // Functions
     function shuffleArray(array) {
+        // return array; // TODO: Remove line
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
@@ -38,19 +39,28 @@ const GameContainer = () => {
 
     const handleStartGame = () => {
         setIsGameStarted(true);
-        const prevGameBoard = gameBoard;
+        setIsGameWon(false);
+        const prevGameBoard = gameBoard.slice();
         setGameBoard(shuffleArray(prevGameBoard));
         setTileSpace(gameBoard.indexOf(" ") + 1);
     };
 
     const handleResetGame = () => {
-        if (
-            confirm(
-                "Click OK to reset game or Cancel to continue with current game"
-            )
-        ) {
+        // Reset after game won and playing another game
+        if (isGameWon) {
             setIsGameStarted(false);
             setGameBoard([...winningBoard]);
+        }
+        // Reset game during play and confirm with user to reset
+        else {
+            if (
+                confirm(
+                    "Click OK to reset game or Cancel to continue with current game"
+                )
+            ) {
+                setIsGameStarted(false);
+                setGameBoard([...winningBoard]);
+            }
         }
     };
 
@@ -71,9 +81,12 @@ const GameContainer = () => {
     };
 
     const handleTileClick = (tileNumberClicked) => {
-        if (!isGameStarted) return;
-        tileNumberClicked = gameBoard.indexOf(tileNumberClicked) + 1;
+        if (!isGameStarted || isGameWon) return;
+        tileNumberClicked = gameBoard.indexOf(tileNumberClicked) + 1; //4
 
+        console.log("Gameboard: ", gameBoard);
+        console.log("Tile space is: ", tileSpace);
+        console.log("Tile number clicked is: ", tileNumberClicked);
         // Check if tile clicked has the space tile next to it defined as a space before, space after, space above or space below
         if (
             (tileNumberClicked + 1 === tileSpace &&
@@ -82,6 +95,8 @@ const GameContainer = () => {
             tileNumberClicked + 4 === tileSpace ||
             tileNumberClicked - 4 === tileSpace
         ) {
+            // const prevTileSpace = tileSpace - 1;
+            // setTileSpace(prevTileSpace - 1);
             setGameBoard(
                 swapArrayElements(
                     gameBoard,
@@ -90,13 +105,14 @@ const GameContainer = () => {
                 )
             );
 
-            setTileSpace(tileNumberClicked); // 12
+            setTileSpace(tileNumberClicked);
         }
         // Check if game won
-        if (gameWon(winningBoard, gameBoard)) {
-            alert("Game won!");
-            // Set a flag here so game cannot continue or button to start another game
-        }
+        // if (gameWon(winningBoard, gameBoard)) {
+        //     setIsGameWon(true);
+        //     // alert("Congratulations!  You Won!!");
+        //     // Set a flag here so game cannot continue or button to start another game
+        // }
     };
 
     // setTileSpace(gameBoard.indexOf(" ") + 1);
@@ -110,6 +126,7 @@ const GameContainer = () => {
                 handleStartGame={handleStartGame}
                 isGameStarted={isGameStarted}
                 handleResetGame={handleResetGame}
+                isGameWon={isGameWon}
             />
         </div>
     );
