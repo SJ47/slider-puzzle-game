@@ -1,96 +1,42 @@
 import React, { useState } from "react";
+
 import Board from "../components/Board";
 
-// Functions
-const swapArrayElements = function (arr, indexA, indexB) {
-    const temp = arr[indexA];
-    arr[indexA] = arr[indexB];
-    arr[indexB] = temp;
-    console.log("ARR: ", arr);
-    return arr;
-};
+import { swapArrayElements } from "../services/swapArrayElements";
+import { shuffleArray } from "../services/shuffleArray";
+import { compareArrays } from "../services/compareArrays";
 
-const findEmptyTile = (tile) => {
-    return tile === " ";
-};
-
-// Component
 const GameContainer = () => {
-    const winningBoard = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        " ",
-    ];
+    const winningBoard = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, " "];
 
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [isGameWon, setIsGameWon] = useState(false);
-
-    const [gameBoard, setGameBoard] = useState([]);
+    const [gameBoard, setGameBoard] = useState([...winningBoard]);
     const [tileSpace, setTileSpace] = useState();
 
-    function shuffleArray(array) {
-        // return array; // TODO: Remove line
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-            if (array[i] === " ") setTileSpace(i + 1);
-        }
-        return array;
-    }
-
-    // Start Game
+    // Handle Start of Game Setup
     const handleStartGame = () => {
         setIsGameStarted(true);
         setIsGameWon(false);
-        setGameBoard(shuffleArray([...winningBoard]));
+        const shuffledBoard = shuffleArray([...winningBoard]);
+        setGameBoard(shuffledBoard);
+        setTileSpace(shuffledBoard.indexOf(" ") + 1);
     };
 
-    // Reset Game
+    // Handle resetting the game either during game or after a win
     const handleResetGame = () => {
         // Reset after game won and playing another game
-        if (isGameWon) {
-            setIsGameStarted(false);
-            setGameBoard([...winningBoard]);
-        }
-        // Reset game during play and confirm with user to reset
-        else {
-            if (
-                confirm(
-                    "Click OK to reset game or Cancel to continue with current game"
-                )
-            ) {
-                setIsGameStarted(false);
-                setGameBoard([...winningBoard]);
-            }
-        }
+        !isGameWon &&
+        !confirm("Click OK to reset game or Cancel to continue with current game")
+            ? null // If game is still in progress and confirm to reset was a cancel
+            : (setIsGameStarted(false), setGameBoard([...winningBoard])); // otherwise game was won or clicked ok to reset game
     };
 
-    const gameWon = (a, b) => {
-        return (
-            Array.isArray(a) &&
-            Array.isArray(b) &&
-            a.length === b.length &&
-            a.every((val, index) => val === b[index])
-        );
-    };
-
+    // Handle tile clicked
     const handleTileClick = (tileNumberClicked) => {
         if (!isGameStarted || isGameWon) return;
-        tileNumberClicked = gameBoard.indexOf(tileNumberClicked) + 1; //4
 
+        tileNumberClicked = gameBoard.indexOf(tileNumberClicked) + 1;
         setTileSpace(gameBoard.indexOf(" ") + 1);
 
         // Check if tile clicked has the space tile next to it defined as a space before, space after, space above or space below
@@ -101,18 +47,15 @@ const GameContainer = () => {
             tileNumberClicked + 4 === tileSpace ||
             tileNumberClicked - 4 === tileSpace
         ) {
+            // if it is a valid click move then swap space tile with the tile number clicked and update the tilespace location
             setGameBoard(
-                swapArrayElements(
-                    gameBoard,
-                    tileSpace - 1,
-                    tileNumberClicked - 1
-                )
+                swapArrayElements(gameBoard, tileSpace - 1, tileNumberClicked - 1)
             );
-
             setTileSpace(tileNumberClicked);
         }
-        // Check if game won
-        if (gameWon(winningBoard, gameBoard)) {
+
+        // Check if game won by comparing current game board status with winning board
+        if (compareArrays(winningBoard, gameBoard)) {
             setIsGameWon(true);
         }
     };
@@ -125,8 +68,8 @@ const GameContainer = () => {
                 gameBoard={gameBoard}
                 handleTileClick={handleTileClick}
                 handleStartGame={handleStartGame}
-                isGameStarted={isGameStarted}
                 handleResetGame={handleResetGame}
+                isGameStarted={isGameStarted}
                 isGameWon={isGameWon}
             />
         </div>

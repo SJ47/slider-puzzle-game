@@ -1,37 +1,36 @@
 import React from "react";
 
-const StartButton = ({
+const GameButton = ({
     handleStartGame,
-    isGameStarted,
     handleResetGame,
+    isGameStarted,
     isGameWon,
 }) => {
+    // If game is not started, set game button to START GAME
     if (!isGameStarted) {
         return (
             <button className="button" onClick={handleStartGame}>
                 START GAME
             </button>
         );
+        // If game is won, set game button offer player to play again
     } else if (isGameWon) {
         return (
             <>
                 <div>YOU WIN!</div>
                 <button className="button" onClick={handleResetGame}>
                     PLAY AGAIN
-                    {/* {isGameWon ? alert("You win!") : null}
-                {!isGameWon ? "RESET GAME" : "PLAY AGAIN"} */}
                 </button>
             </>
         );
     } else {
+        // Game in progress, set game button to RESET GAME should the player wish to restart game during play
         return (
             <button className="button" onClick={handleResetGame}>
                 RESET GAME
-                {/* {isGameWon ? alert("You win!") : null}
-                {!isGameWon ? "RESET GAME" : "PLAY AGAIN"} */}
             </button>
         );
     }
 };
 
-export default StartButton;
+export default GameButton;
