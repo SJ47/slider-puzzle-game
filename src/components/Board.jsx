@@ -1,6 +1,5 @@
 import React from "react";
 import Tile from "./Tile";
-import "../App.css";
 import StartButton from "./StartButton";
 
 const Board = ({
@@ -19,8 +18,8 @@ const Board = ({
 
     return (
         <>
-            <h3>Game Board Size: 4x4</h3>
             <StartButton
+                className="game-button"
                 handleStartGame={handleStartGame}
                 handleResetGame={handleResetGame}
                 isGameStarted={isGameStarted}

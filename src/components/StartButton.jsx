@@ -2,8 +2,8 @@ import React from "react";
 
 const StartButton = ({
     handleStartGame,
-    isGameStarted,
     handleResetGame,
+    isGameStarted,
     isGameWon,
 }) => {
     if (!isGameStarted) {
