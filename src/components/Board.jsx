@@ -11,11 +11,13 @@ const Board = ({
     isGameStarted,
     isGameWon,
 }) => {
-    const arrayOfTiles = gameBoard.map((index) => {
-        return index !== gameBoard.length ? (
-            <Tile key={index} tile={index} handleTileClick={handleTileClick} />
-        ) : (
-            <Tile key={index} tile={" "} handleTileClick={handleTileClick} />
+    const arrayOfTiles = gameBoard.map((tile, index) => {
+        return (
+            <Tile
+                key={index + 1}
+                tile={tile}
+                handleTileClick={handleTileClick}
+            />
         );
     });
 
