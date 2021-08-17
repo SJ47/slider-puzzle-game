@@ -1,6 +1,6 @@
 import React from "react";
 import Tile from "./Tile";
-import StartButton from "./StartButton";
+import GameButton from "./GameButton";
 
 const Board = ({
     gameBoard,
@@ -18,7 +18,7 @@ const Board = ({
 
     return (
         <>
-            <StartButton
+            <GameButton
                 className="game-button"
                 handleStartGame={handleStartGame}
                 handleResetGame={handleResetGame}
