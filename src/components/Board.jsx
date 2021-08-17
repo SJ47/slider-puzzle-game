@@ -13,11 +13,7 @@ const Board = ({
 }) => {
     const arrayOfTiles = gameBoard.map((tile, index) => {
         return (
-            <Tile
-                key={index + 1}
-                tile={tile}
-                handleTileClick={handleTileClick}
-            />
+            <Tile key={index + 1} tile={tile} handleTileClick={handleTileClick} />
         );
     });
 
@@ -26,8 +22,8 @@ const Board = ({
             <h3>Game Board Size: 4x4</h3>
             <StartButton
                 handleStartGame={handleStartGame}
-                isGameStarted={isGameStarted}
                 handleResetGame={handleResetGame}
+                isGameStarted={isGameStarted}
                 isGameWon={isGameWon}
             />
             <div className="board-container">{arrayOfTiles}</div>
