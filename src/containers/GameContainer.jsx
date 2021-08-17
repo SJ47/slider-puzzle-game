@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import Board from "../components/Board";
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
+// Functions
+const swapArrayElements = function (arr, indexA, indexB) {
+    const temp = arr[indexA];
+    arr[indexA] = arr[indexB];
+    arr[indexB] = temp;
+    console.log("ARR: ", arr);
+    return arr;
+};
 
+const findEmptyTile = (tile) => {
+    return tile === " ";
+};
+
+// Component
 const GameContainer = () => {
-    // State and variables
-    const [winningBoard, setWinningBoard] = useState([
+    const winningBoard = [
         1,
         2,
         3,
@@ -28,19 +33,49 @@ const GameContainer = () => {
         14,
         15,
         " ",
-    ]);
+    ];
 
-    const [gameBoard, setGameBoard] = useState(shuffleArray([...winningBoard])); // bad
-    const [tileSpace, setTileSpace] = useState(gameBoard.indexOf(" ") + 1);
-    console.log("Current tile space is: ", tileSpace);
+    const [isGameStarted, setIsGameStarted] = useState(false);
+    const [isGameWon, setIsGameWon] = useState(false);
 
-    // Functions
-    const swapArrayElements = function (arr, indexA, indexB) {
-        var temp = arr[indexA];
-        arr[indexA] = arr[indexB];
-        arr[indexB] = temp;
-        console.log("Swapped array element: ", arr);
-        return arr;
+    const [gameBoard, setGameBoard] = useState([]);
+    const [tileSpace, setTileSpace] = useState();
+
+    function shuffleArray(array) {
+        // return array; // TODO: Remove line
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+            if (array[i] === " ") setTileSpace(i + 1);
+        }
+        return array;
+    }
+
+    // Start Game
+    const handleStartGame = () => {
+        setIsGameStarted(true);
+        setIsGameWon(false);
+        setGameBoard(shuffleArray([...winningBoard]));
+    };
+
+    // Reset Game
+    const handleResetGame = () => {
+        // Reset after game won and playing another game
+        if (isGameWon) {
+            setIsGameStarted(false);
+            setGameBoard([...winningBoard]);
+        }
+        // Reset game during play and confirm with user to reset
+        else {
+            if (
+                confirm(
+                    "Click OK to reset game or Cancel to continue with current game"
+                )
+            ) {
+                setIsGameStarted(false);
+                setGameBoard([...winningBoard]);
+            }
+        }
     };
 
     const gameWon = (a, b) => {
@@ -53,11 +88,10 @@ const GameContainer = () => {
     };
 
     const handleTileClick = (tileNumberClicked) => {
-        tileNumberClicked = gameBoard.indexOf(tileNumberClicked) + 1;
+        if (!isGameStarted || isGameWon) return;
+        tileNumberClicked = gameBoard.indexOf(tileNumberClicked) + 1; //4
 
-        console.log("Tile clicked", tileNumberClicked);
-        console.log("gameBoard", gameBoard);
-        console.log("Tile space: ", tileSpace);
+        setTileSpace(gameBoard.indexOf(" ") + 1);
 
         // Check if tile clicked has the space tile next to it defined as a space before, space after, space above or space below
         if (
@@ -67,8 +101,6 @@ const GameContainer = () => {
             tileNumberClicked + 4 === tileSpace ||
             tileNumberClicked - 4 === tileSpace
         ) {
-            console.log("Valid move");
-
             setGameBoard(
                 swapArrayElements(
                     gameBoard,
@@ -77,22 +109,26 @@ const GameContainer = () => {
                 )
             );
 
-            setTileSpace(tileNumberClicked); // 12
-        } else {
-            console.log("WRONG MOVE!! ");
+            setTileSpace(tileNumberClicked);
         }
-
         // Check if game won
         if (gameWon(winningBoard, gameBoard)) {
-            alert("Game won!");
-            // Set a flag here so game cannot continue or button to start another game
+            setIsGameWon(true);
         }
     };
 
     return (
-        <div>
+        <div className="game-container">
             <h1>Slider Puzzle Game</h1>
-            <Board gameBoard={gameBoard} handleTileClick={handleTileClick} />
+
+            <Board
+                gameBoard={gameBoard}
+                handleTileClick={handleTileClick}
+                handleStartGame={handleStartGame}
+                isGameStarted={isGameStarted}
+                handleResetGame={handleResetGame}
+                isGameWon={isGameWon}
+            />
         </div>
     );
 };

@@ -2,10 +2,7 @@ import React from "react";
 
 const Tile = ({ tile, handleTileClick }) => {
     return (
-        <div
-            className="tile"
-            onClick={(e) => handleTileClick(parseInt(e.target.textContent))}
-        >
+        <div className="tile" onClick={() => handleTileClick(tile)}>
             {tile}
         </div>
     );
