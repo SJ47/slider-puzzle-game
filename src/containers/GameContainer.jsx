@@ -5,6 +5,8 @@ import Board from "../components/Board";
 import { swapArrayElements } from "../services/swapArrayElements";
 import { shuffleArray } from "../services/shuffleArray";
 import { compareArrays } from "../services/compareArrays";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 const GameContainer = () => {
     const winningBoard = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, " "];
@@ -62,7 +64,7 @@ const GameContainer = () => {
 
     return (
         <div className="game-container">
-            <h1>Slider Puzzle Game</h1>
+            <Header />
 
             <Board
                 gameBoard={gameBoard}
@@ -72,6 +74,7 @@ const GameContainer = () => {
                 isGameStarted={isGameStarted}
                 isGameWon={isGameWon}
             />
+            <Footer />
         </div>
     );
 };
