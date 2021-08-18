@@ -1,7 +1,11 @@
 # Slider puzzle game
 
 A 15 puzzle slider game.
+
+When you start a new game, the tiles will be randomly placed around the tile board
+
 Click a tile next to the space tile to move tiles around.
+
 You win the game by correctly lining up all the numbers in ascending order 1, 2, 3, 4, 5 etc.
 
 ## Installation and Setup
