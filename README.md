@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8b48a0ef-9bc5-4b30-af7f-37120faa858f/deploy-status)](https://app.netlify.com/sites/flamboyant-bardeen-297a2b/deploys)
+
 # Slider puzzle game
 
 A 15 puzzle slider game.
