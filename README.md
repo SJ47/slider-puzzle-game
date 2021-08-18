@@ -11,7 +11,7 @@ You win the game by correctly lining up all the numbers in ascending order 1, 2,
 ## Installation and Setup
 
 1. Clone repo
-2. Open a terminal window and go to your app root folder
+2. Open a terminal window and go to the app root folder where you cloned it
 3. npm install
 4. npm run dev
 5. Go to your browser http://localhost:3000 and you should see the game running running
